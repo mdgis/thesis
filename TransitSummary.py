@@ -12,6 +12,46 @@ import pandas as pd
 #path_file = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\RidershipPaths.txt"
 """ FORMAT FOR ITERATING: >>> for i in path_contents: transit_loads(path + "\\"+ i) <---"""
 
+
+#2010 Base 
+path2010Base = ["March13Model\CubeCatCong\Base\Year 2010\PTLOAD24HRS_Year 2010.PRN"]
+#2010 Fixed
+paths2010fixed      = ["March13Model\CubeCatCong\Base\Year 2010\SLR1\SLR1_Fixed\PTLOAD24HRS_SLR1_Fixed.PRN",
+                       "March13Model\CubeCatCong\Base\Year 2010\SLR2\SLR2_Fixed\PTLOAD24HRS_SLR2_Fixed.PRN",
+                       "March13Model\CubeCatCong\Base\Year 2010\SLR3\SLR3_Fixed\PTLOAD24HRS_SLR3_Fixed.PRN",
+                       "March13Model\CubeCatCong\Base\Year 2010\SLR4\SLR4_Fixed\PTLOAD24HRS_SLR4_Fixed.PRN",
+                       "March13Model\CubeCatCong\Base\Year 2010\SLR5\SLR5_Fixed\PTLOAD24HRS_SLR5_Fixed.PRN",
+                       "March13Model\CubeCatCong\Base\Year 2010\SLR6\SLR6_Fixed\PTLOAD24HRS_SLR6_Fixed.PRN"]
+#2010 Variable                     
+paths2010variable   =  ["March13Model\CubeCatCong\Base\Year 2010\SLR1\SLR1_Variable\PTLOAD24HRS_SLR1_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Year 2010\SLR2\SLR2_Variable\PTLOAD24HRS_SLR2_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Year 2010\SLR3\SLR3_Variable\PTLOAD24HRS_SLR3_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Year 2010\SLR4\SLR4_Variable\PTLOAD24HRS_SLR4_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Year 2010\SLR5\SLR5_Variable\PTLOAD24HRS_SLR5_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Year 2010\SLR6\SLR6_Variable\PTLOAD24HRS_SLR6_Variable.PRN"]
+#Scenarios Fixed
+pathScenarioBase =      ["March13Model\CubeCatCong\Base\Sc2_2030\PTLOAD24HRS_SC2_2030.PRN",
+                         "March13Model\CubeCatCong\Base\SC2_2030_NOBUS\PTLOAD24HRS_SC2_2030_NOBUS.PRN",
+                         "March13Model\CubeCatCong\Base\Sc2_2030_OuterBus\PTLOAD24HRS_SC2_2030_OuterBus.PRN",
+                         "March13Model\CubeCatCong\Base\Sc1_2030\PTLOAD24HRS_SC1_2030.PRN",
+                         "March13Model\CubeCatCong\Base\SC1_2030_NOBUS\PTLOAD24HRS_SC1_2030_NOBUS.PRN",
+                         "March13Model\CubeCatCong\Base\Sc1_2030_OuterBus\PTLOAD24HRS_SC1_2030_OuterBus.PRN"]
+#Scenarios Fixed
+pathScenaroFixed     = ["March13Model\CubeCatCong\Base\Sc2_2030\SC2_2030_4ft_Fixed\PTLOAD24HRS_SC2_2030_4ft_Fixed.PRN",
+                        "March13Model\CubeCatCong\Base\SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Fixed.PRN",
+                        "March13Model\CubeCatCong\Base\Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Fixed.PRN",
+                        "March13Model\CubeCatCong\Base\Sc1_2030\SC1_2030_4ft_Fixed\PTLOAD24HRS_SC1_2030_4ft_Fixed.PRN",
+                        "March13Model\CubeCatCong\Base\SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Fixed.PRN",
+                        "March13Model\CubeCatCong\Base\Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Fixed.PRN"]
+#Scenarios Variable                        
+pathScenarioVariable = ["March13Model\CubeCatCong\Base\Sc2_2030\SC2_2030_4ft_Variable\PTLOAD24HRS_SC2_2030_4ft_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Sc1_2030\SC1_2030_4ft_Variable\PTLOAD24HRS_SC1_2030_4ft_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Variable.PRN",
+                        "March13Model\CubeCatCong\Base\Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Variable.PRN"]
+
+
 path_file = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\Iter2_TEMPpaths.txt"
 outpath = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\TransitOuputs\Iter2Ridership"
 #This function parses a text file for the different paths I need, I want to add 
