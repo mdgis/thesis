@@ -6,6 +6,7 @@ Created on Mon Jan 12 16:42:46 2015
 """
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
 #path = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\Iter1_ScenarioModeling"
 #path_contents = os.listdir(path)
 #outpath = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\TransitOuputs"
@@ -13,59 +14,55 @@ import pandas as pd
 """ FORMAT FOR ITERATING: >>> for i in path_contents: transit_loads(path + "\\"+ i) <---"""
 
 
-#2010 Base 
-path2010Base = ["March13Model\CubeCatCong\Base\Year 2010\PTLOAD24HRS_Year 2010.PRN"]
 #2010 Fixed
-paths2010fixed      = ["March13Model\CubeCatCong\Base\Year 2010\SLR1\SLR1_Fixed\PTLOAD24HRS_SLR1_Fixed.PRN",
-                       "March13Model\CubeCatCong\Base\Year 2010\SLR2\SLR2_Fixed\PTLOAD24HRS_SLR2_Fixed.PRN",
-                       "March13Model\CubeCatCong\Base\Year 2010\SLR3\SLR3_Fixed\PTLOAD24HRS_SLR3_Fixed.PRN",
-                       "March13Model\CubeCatCong\Base\Year 2010\SLR4\SLR4_Fixed\PTLOAD24HRS_SLR4_Fixed.PRN",
-                       "March13Model\CubeCatCong\Base\Year 2010\SLR5\SLR5_Fixed\PTLOAD24HRS_SLR5_Fixed.PRN",
-                       "March13Model\CubeCatCong\Base\Year 2010\SLR6\SLR6_Fixed\PTLOAD24HRS_SLR6_Fixed.PRN"]
+paths2010fixed      = ["Year 2010\PTLOAD24HRS_Year 2010.PRN",
+                       "Year 2010\SLR1\SLR1_Fixed\PTLOAD24HRS_SLR1_Fixed.PRN",
+                       "Year 2010\SLR2\SLR2_Fixed\PTLOAD24HRS_SLR2_Fixed.PRN",
+                       "Year 2010\SLR3\SLR3_Fixed\PTLOAD24HRS_SLR3_Fixed.PRN",
+                       "Year 2010\SLR4\SLR4_Fixed\PTLOAD24HRS_SLR4_Fixed.PRN",
+                       "Year 2010\SLR5\SLR5_Fixed\PTLOAD24HRS_SLR5_Fixed.PRN",
+                       "Year 2010\SLR6\SLR6_Fixed\PTLOAD24HRS_SLR6_Fixed.PRN"]
 #2010 Variable                     
-paths2010variable   =  ["March13Model\CubeCatCong\Base\Year 2010\SLR1\SLR1_Variable\PTLOAD24HRS_SLR1_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Year 2010\SLR2\SLR2_Variable\PTLOAD24HRS_SLR2_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Year 2010\SLR3\SLR3_Variable\PTLOAD24HRS_SLR3_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Year 2010\SLR4\SLR4_Variable\PTLOAD24HRS_SLR4_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Year 2010\SLR5\SLR5_Variable\PTLOAD24HRS_SLR5_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Year 2010\SLR6\SLR6_Variable\PTLOAD24HRS_SLR6_Variable.PRN"]
+paths2010variable   =  ["Year 2010\PTLOAD24HRS_Year 2010.PRN",
+                        "Year 2010\SLR1\SLR1_Variable\PTLOAD24HRS_SLR1_Variable.PRN",
+                        "Year 2010\SLR2\SLR2_Variable\PTLOAD24HRS_SLR2_Variable.PRN",
+                        "Year 2010\SLR3\SLR3_Variable\PTLOAD24HRS_SLR3_Variable.PRN",
+                        "Year 2010\SLR4\SLR4_Variable\PTLOAD24HRS_SLR4_Variable.PRN",
+                        "Year 2010\SLR5\SLR5_Variable\PTLOAD24HRS_SLR5_Variable.PRN",
+                        "Year 2010\SLR6\SLR6_Variable\PTLOAD24HRS_SLR6_Variable.PRN"]
 #Scenarios Fixed
-pathScenarioBase =      ["March13Model\CubeCatCong\Base\Sc2_2030\PTLOAD24HRS_SC2_2030.PRN",
-                         "March13Model\CubeCatCong\Base\SC2_2030_NOBUS\PTLOAD24HRS_SC2_2030_NOBUS.PRN",
-                         "March13Model\CubeCatCong\Base\Sc2_2030_OuterBus\PTLOAD24HRS_SC2_2030_OuterBus.PRN",
-                         "March13Model\CubeCatCong\Base\Sc1_2030\PTLOAD24HRS_SC1_2030.PRN",
-                         "March13Model\CubeCatCong\Base\SC1_2030_NOBUS\PTLOAD24HRS_SC1_2030_NOBUS.PRN",
-                         "March13Model\CubeCatCong\Base\Sc1_2030_OuterBus\PTLOAD24HRS_SC1_2030_OuterBus.PRN"]
+pathScenarioBase =      ["Sc2_2030\PTLOAD24HRS_SC2_2030.PRN",
+                         "SC2_2030_NOBUS\PTLOAD24HRS_SC2_2030_NOBUS.PRN",
+                         "Sc2_2030_OuterBus\PTLOAD24HRS_SC2_2030_OuterBus.PRN",
+                         "Sc1_2030\PTLOAD24HRS_SC1_2030.PRN",
+                         "SC1_2030_NOBUS\PTLOAD24HRS_SC1_2030_NOBUS.PRN",
+                         "Sc1_2030_OuterBus\PTLOAD24HRS_SC1_2030_OuterBus.PRN"]
 #Scenarios Fixed
-pathScenaroFixed     = ["March13Model\CubeCatCong\Base\Sc2_2030\SC2_2030_4ft_Fixed\PTLOAD24HRS_SC2_2030_4ft_Fixed.PRN",
-                        "March13Model\CubeCatCong\Base\SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Fixed.PRN",
-                        "March13Model\CubeCatCong\Base\Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Fixed.PRN",
-                        "March13Model\CubeCatCong\Base\Sc1_2030\SC1_2030_4ft_Fixed\PTLOAD24HRS_SC1_2030_4ft_Fixed.PRN",
-                        "March13Model\CubeCatCong\Base\SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Fixed.PRN",
-                        "March13Model\CubeCatCong\Base\Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Fixed.PRN"]
+pathScenaroFixed     = ["Sc2_2030\SC2_2030_4ft_Fixed\PTLOAD24HRS_SC2_2030_4ft_Fixed.PRN",
+                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Fixed.PRN",
+                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Fixed.PRN",
+                        "Sc1_2030\SC1_2030_4ft_Fixed\PTLOAD24HRS_SC1_2030_4ft_Fixed.PRN",
+                        "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Fixed.PRN",
+                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Fixed.PRN"]
 #Scenarios Variable                        
-pathScenarioVariable = ["March13Model\CubeCatCong\Base\Sc2_2030\SC2_2030_4ft_Variable\PTLOAD24HRS_SC2_2030_4ft_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Sc1_2030\SC1_2030_4ft_Variable\PTLOAD24HRS_SC1_2030_4ft_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Variable.PRN",
-                        "March13Model\CubeCatCong\Base\Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Variable.PRN"]
+pathScenarioVariable = ["Sc2_2030\SC2_2030_4ft_Variable\PTLOAD24HRS_SC2_2030_4ft_Variable.PRN",
+                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Variable.PRN",
+                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Variable.PRN",
+                        "Sc1_2030\SC1_2030_4ft_Variable\PTLOAD24HRS_SC1_2030_4ft_Variable.PRN",
+                        "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Variable.PRN",
+                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Variable.PRN"]
 
-
-path_file = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\Iter2_TEMPpaths.txt"
-outpath = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\TransitOuputs\Iter2Ridership"
+relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
+fixed_path = 'March13Model\CubeCatCong\Base'
+outpath = "D:\User_Documents\Dowd_Michael\TestingFolder\MarchTransitOutput"
 #This function parses a text file for the different paths I need, I want to add 
 #some options to it to select only specific seciton for now it will return all 
 #entries in the text file.
-def load_file_list(path_file):
-    with open(path_file, 'r') as p:
-        paths = p.readlines()
-    files = []
-    for line in paths:
-        this_file = line.split(',')
-        if len(this_file) > 1:
-             files.append(this_file[1].strip(' ').strip('\n'))
-    return files
+def constructPaths(pathList):
+    paths = []
+    for i in pathList:
+        paths.append(relative_path + "\\" + fixed_path + "\\" + i)
+    return paths
 
 #This function will create a formatted text file of the Cube Output
 def transit_loads(path, outpath):
@@ -130,12 +127,12 @@ def transit_summary_prn(path, first):
         data.columns = base_columns
         return data
 
-def Create_Tables(path_file, outpath):
+def Create_Tables(pathList, outpath):
     """This funciton will use all other functions to produce a single runable function to
     create the output. It will use load_file_list to get paths then run the transit_loads
     function while appending the returned file name from transit loads to a list. It will then
     call aggregate output witht that list"""
-    files = load_file_list(path_file)
+    files = constructPaths(pathList)
     out_files = []
     for fl in files:
         out_files.append(transit_loads(fl, outpath))
@@ -151,6 +148,10 @@ def Create_Tables(path_file, outpath):
             
     base_columns = ['Name', 'Mode', 'Stp', 'Dist']
 
+    df = df.replace("--", 0)
+    for col in df.columns[7:]:
+        df[col] = df[col].astype('float')
+    
     #Create specific Dataframes
     dfpass_cols, dfTime_cols, dfPdist_cols, dfPHrs_cols = [],[],[],[]
     for col in df.columns:
@@ -167,6 +168,7 @@ def Create_Tables(path_file, outpath):
     dfTime = df[base_columns + dfTime_cols]
     dfPdist = df[base_columns + dfPdist_cols]
     dfPHrs = df[base_columns + dfPHrs_cols]
+    
     
     return [df, dfPass, dfTime, dfPdist, dfPHrs]
         
