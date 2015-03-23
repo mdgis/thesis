@@ -133,19 +133,7 @@ def compareLostTrips(paths, scenario=False):
     
     l = pd.read_csv(lookup)
     df = pd.merge(df, l, on = 'Input', how='outer')
-    df["TPURP"] = ""
-    df["SP_TPURP"] = df['Input'].map(lambda x: x[6:])   
-    df["MODE"] = ""
-    #Now assign the proper trip purpose
-    
-
- 
-
-            
-    
-    
-    
-    
+       
     Base, NewTot, Lost_, LostPerc = [],[],[],[]
     for col in df.columns:
         if 'NewTot' in col:
