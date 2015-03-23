@@ -16,12 +16,13 @@ import pandas as pd
 lookup = "C:\\Users\\mdo\\Desktop\\MIT\\MIT_Fall2014\\Thesis\\MiscPythonSQL\\thesis\\tripPurposeLookup.csv"
 
 
-relative_path = "I:\Backups"
-#relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
+#relative_path = "I:\Backups"
+relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
 fixed_path = 'March13Model\CubeCatCong\Base'
 outpath = "C:\Users\mdo\Desktop"
 
-paths2010fixed      = ["Year 2010\SLR1\SLR1_Fixed\Lost_Print_SLR1",
+paths2010fixed      = ["Year 2010\Lost_Print_SLR0",
+                       "Year 2010\SLR1\SLR1_Fixed\Lost_Print_SLR1",
                        "Year 2010\SLR2\SLR2_Fixed\Lost_Print_SLR2",
                        "Year 2010\SLR3\SLR3_Fixed\Lost_Print_SLR3",
                        "Year 2010\SLR4\SLR4_Fixed\Lost_Print_SLR4",
