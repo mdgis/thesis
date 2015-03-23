@@ -13,8 +13,8 @@ import pandas as pd
 #path_file = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\RidershipPaths.txt"
 """ FORMAT FOR ITERATING: >>> for i in path_contents: transit_loads(path + "\\"+ i) <---"""
 
-lookup = "C:\\Users\\mdo\\Desktop\\MIT\\MIT_Fall2014\\Thesis\\MiscPythonSQL\\thesis\\tripPurposeLookup.csv"
-
+#lookup = "C:\\Users\\mdo\\Desktop\\MIT\\MIT_Fall2014\\Thesis\\MiscPythonSQL\\thesis\\tripPurposeLookup.csv"
+lookup = "D:\\User_Documents\\Dowd_Michael\\Python\\thesis\\tripPurposeLookup.csv"
 
 #relative_path = "I:\Backups"
 relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
@@ -29,26 +29,43 @@ paths2010fixed      = ["Year 2010\Lost_Print_SLR0",
                        "Year 2010\SLR5\SLR5_Fixed\Lost_Print_SLR5",
                        "Year 2010\SLR6\SLR6_Fixed\Lost_Print_SLR6"]
                        
-paths2010variable   =  ["Year 2010\SLR1\SLR1_Variable\Lost_Print_SLR1",
+paths2010variable   =  ["Year 2010\Lost_Print_SLR0",
+                        "Year 2010\SLR1\SLR1_Variable\Lost_Print_SLR1",
                        "Year 2010\SLR2\SLR2_Variable\Lost_Print_SLR2",
                        "Year 2010\SLR3\SLR3_Variable\Lost_Print_SLR3",
                        "Year 2010\SLR4\SLR4_Variable\Lost_Print_SLR4",
                        "Year 2010\SLR5\SLR5_Variable\Lost_Print_SLR5",
                        "Year 2010\SLR6\SLR6_Variable\Lost_Print_SLR6"]
 
-pathScenaroFixed     = ["Sc1_2030\SC1_2030_4ft_Fixed\Lost_Print_SLR4",
+                        
+pathScenaro1Fixed   =      ["Sc1_2030\Lost_Print_SLR0",
+                        "SC1_2030_NOBUS\Lost_Print_SLR0",
+                        "Sc1_2030_OuterBus\Lost_Print_SLR0",
+                        "Sc1_2030\SC1_2030_4ft_Fixed\Lost_Print_SLR4",
                         "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\Lost_Print_SLR4",
-                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\Lost_Print_SLR4",
+                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\Lost_Print_SLR4"]
+                        
+pathScenaro2Fixed  =      ["Sc2_2030\Lost_Print_SLR0",
+                        "SC2_2030_NOBUS\Lost_Print_SLR0",
+                        "Sc2_2030_OuterBus\Lost_Print_SLR0",
                         "Sc2_2030\SC2_2030_4ft_Fixed\Lost_Print_SLR4",
                         "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\Lost_Print_SLR4",
                         "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\Lost_Print_SLR4"]
                         
-pathScenarioVariable = ["Sc1_2030\SC1_2030_4ft_Fixed\Lost_Print_SLR4",
-                        "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\Lost_Print_SLR4",
-                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\Lost_Print_SLR4",
-                        "Sc2_2030\SC2_2030_4ft_Fixed\Lost_Print_SLR4",
-                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\Lost_Print_SLR4",
-                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\Lost_Print_SLR4"]
+pathScenaro1Variable   =      ["Sc1_2030\Lost_Print_SLR0",
+                                "SC1_2030_NOBUS\Lost_Print_SLR0",
+                                "Sc1_2030_OuterBus\Lost_Print_SLR0",
+                                "Sc1_2030\SC1_2030_4ft_Variable\Lost_Print_SLR4",
+                                "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\Lost_Print_SLR4",
+                                "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\Lost_Print_SLR4"]
+                        
+pathScenaro2Variable  =      ["Sc2_2030\Lost_Print_SLR0",
+                              "SC2_2030_NOBUS\Lost_Print_SLR0",
+                              "Sc2_2030_OuterBus\Lost_Print_SLR0",
+                              "Sc2_2030\SC2_2030_4ft_Variable\Lost_Print_SLR4",
+                              "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Variable\Lost_Print_SLR4",
+                              "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Variable\Lost_Print_SLR4"]
+                        
             
 def constructPaths(pathList):
     paths = []
@@ -167,8 +184,15 @@ def compareLostTrips(paths, scenario=False):
     df = df[orderedColumns]
     return df, ModeGroup, TpurpGroup, ChoCapGroup
     
+#Call
+a,b,c,d= compareLostTrips(pathScenaro2Variable, True)    
     
-    
-        
-       
+total = []
+for col in a.columns:
+    if "New" in col:
+        total.append(col)
+
+out = a[["Input"]+total]    
+        #Summary Command for Excel
+       #a[["Input"]+total].to_clipboard()
      
