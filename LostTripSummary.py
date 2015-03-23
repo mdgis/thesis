@@ -55,7 +55,7 @@ def constructPaths(pathList):
         paths.append(relative_path + "\\" + fixed_path + "\\" + i)
     return paths
 
-def getLostTrips(path, outpath, scenario=False):
+def getLostTrips(path, scenario=False):
     """ 
     Takes in one Lost Trip File and Calcualtes the Reduction from the baseline totals    
     """
@@ -118,7 +118,7 @@ def compareLostTrips(paths, scenario=False):
     paths = constructPaths(paths)
     out_files = []
     for File in paths:
-        out_files.append(getLostTrips(File, outpath, scenario))
+        out_files.append(getLostTrips(File, scenario))
         
     first = True
     for item in out_files:
@@ -144,10 +144,27 @@ def compareLostTrips(paths, scenario=False):
             LostPerc.append(col)
         else:
             Base.append(col)
-
+    
+    #Groups by Mode
+    ModeGroup = df[["Mode", "BaseTotal"] + Lost_].groupby('Mode').sum()
+    for col in Lost_:
+        ModeGroup["Perc_" + col] = ModeGroup[col]/ModeGroup["BaseTotal"]
+        
+    #groups by TPURP
+    TpurpGroup = df[["TPURP", "BaseTotal"] + Lost_].groupby('TPURP').sum()
+    for col in Lost_:
+        TpurpGroup["Perc_" + col] = TpurpGroup[col]/TpurpGroup["BaseTotal"]
+        
+    #Choice Captive
+    ChoCapGroup = df[["ChoiceCaptive", "BaseTotal"] + Lost_].groupby('ChoiceCaptive').sum()
+    for col in Lost_:
+        ChoCapGroup["Perc_" + col] = ChoCapGroup[col]/ChoCapGroup["BaseTotal"]
+        
+        
+        
     orderedColumns = Base + NewTot + Lost_ + LostPerc
     df = df[orderedColumns]
-    return df
+    return df, ModeGroup, TpurpGroup, ChoCapGroup
     
     
     
