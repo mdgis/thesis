@@ -169,6 +169,11 @@ def Create_Tables(pathList, outpath):
     dfPdist = df[base_columns + dfPdist_cols]
     dfPHrs = df[base_columns + dfPHrs_cols]
     
+    #compute Difference from NO Inundation
+    for col in dfPHrs_cols[1:]:
+        dfPHrs["D_" + col] = dfPHrs[col] - dfPHrs[dfPHrs_cols[0]]
+    for col in dfpass_cols[1:]:
+        dfPass["D_" + col] = dfPass[col] - dfPass[dfpass_cols[0]]
     
     return [df, dfPass, dfTime, dfPdist, dfPHrs]
         
