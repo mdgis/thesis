@@ -12,8 +12,12 @@ import pandas as pd
 #outpath = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\TransitOuputs"
 #path_file = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\ImpactModeling\ScenarioModeling\RidershipPaths.txt"
 """ FORMAT FOR ITERATING: >>> for i in path_contents: transit_loads(path + "\\"+ i) <---"""
-path = "C:\Users\mdo\Desktop\Lost_Print_SLR4"
-relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
+
+lookup = "C:\\Users\\mdo\\Desktop\\MIT\\MIT_Fall2014\\Thesis\\MiscPythonSQL\\thesis\\tripPurposeLookup.csv"
+
+
+relative_path = "I:\Backups"
+#relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
 fixed_path = 'March13Model\CubeCatCong\Base'
 outpath = "C:\Users\mdo\Desktop"
 
@@ -107,6 +111,9 @@ def getLostTrips(path, outpath, scenario=False):
     df["LostPerc" + slr_lvl] = df["Lost_"+slr_lvl] / df.BaseTotal
     return df    
     
+
+
+
 def compareLostTrips(paths, scenario=False):
     paths = constructPaths(paths)
     out_files = []
@@ -123,7 +130,22 @@ def compareLostTrips(paths, scenario=False):
             df2 = item
             df2 = df2.drop(['Output','BaseTotal'], axis=1)
             df = pd.merge(df, df2, on='Input', how='outer')
+    
+    l = pd.read_csv(lookup)
+    df = pd.merge(df, l, on = 'Input', how='outer')
+    df["TPURP"] = ""
+    df["SP_TPURP"] = df['Input'].map(lambda x: x[6:])   
+    df["MODE"] = ""
+    #Now assign the proper trip purpose
+    
+
+ 
+
             
+    
+    
+    
+    
     Base, NewTot, Lost_, LostPerc = [],[],[],[]
     for col in df.columns:
         if 'NewTot' in col:
