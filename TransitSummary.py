@@ -52,9 +52,12 @@ pathScenarioVariable = ["Sc2_2030\SC2_2030_4ft_Variable\PTLOAD24HRS_SC2_2030_4ft
                         "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Variable.PRN",
                         "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Variable.PRN"]
 
-relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
-fixed_path = 'March13Model\CubeCatCong\Base'
-outpath = "D:\User_Documents\Dowd_Michael\TestingFolder\MarchTransitOutput"
+relative_path = "I:\\Backups"
+#relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
+fixed_path = 'March13Model\\CubeCatCong\\Base'
+#outpath = "D:\User_Documents\Dowd_Michael\TestingFolder\MarchTransitOutput"
+outpath = "C:\\Users\\mdo\\Desktop\\March24TransitOut"
+
 #This function parses a text file for the different paths I need, I want to add 
 #some options to it to select only specific seciton for now it will return all 
 #entries in the text file.
@@ -123,7 +126,7 @@ def transit_summary_prn(path, first):
         print data
         base_columns = ['Name','Time', 'Pass','Pdist','PHr']
         for i,v in enumerate(base_columns[1:len(base_columns)]):
-            base_columns[i+1]= v + label
+            base_columns[i+1] = v + label
         data.columns = base_columns
         return data
 
@@ -178,4 +181,5 @@ def Create_Tables(pathList, outpath):
     return [df, dfPass, dfTime, dfPdist, dfPHrs]
         
     
-    
+#Call
+df, dfPass, dfTime, dfPdist, dfPHrs = Create_Tables(paths2010variable, outpath)
