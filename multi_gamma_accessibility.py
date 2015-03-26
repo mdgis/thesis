@@ -23,36 +23,26 @@ def multi_gamma_access(path, access_unit, access_label, Inundation_Percent_label
     access_unit: must be csv table, it can have multiple fields. This should be something like a table of
         of various zonal information.
         <<<<>>>>>    
-    access_label: this is the Column Name of the access measue you are interested in.
+        
+    access_label: this is the Column Name of the access measure you are interested in.
         <<<<>>>>>    
-    cutoff: This is a value whereby all areas below the cutoff have full access to access_units
-        in other words if the cutoff is 30 minutes, then any zone that can be reached in 30 minutes
-         from another zone will be considered to have full access to that access unit. 
         <<<<>>>>>
-    function: Either "Gamma" or "Exp"; when using gamma set the cutoff to zero. 
-    decay_not_limt: If decay_not_limit is true then a decay function is applied over the cutoff value, if
-        decay_not_limit = False then all access)units accessiblie within a certain time limit are added and
-        all units not accessiblit within that time are ignored. 
-        DEFAULT = True
-    decay_lambda = the value that is used in the decay function that is applied for travel values over the
-        cutoff value: Decay Function = Access_Unit * exp(Travel_Time * -decay_lambda5)
-        DEFAULT = 0.05
         <<<<>>>>>
-    diagnols: True if you want diagnol values set to zero, false if you want to include the intrazonal
+    Intrazonal: True if you want diagnol values set to zero, false if you want to include the intrazonal
         access to access_unts. 
         DEFAULT = False
 
     """
 
     
-    #--------------Prepare Accessibility Unit Vector-----------------------#
-    #Read in the "accessibility measure" could be persons, jobs, firms, needs to be a zonal total
-    #based on the zonal unit. ie. total jobs per taz, function will return access to jobs by taz
-    print 'Preparing Accessibiity Vector'
+    ##--------------Prepare Accessibility Unit Vector-----------------------#
+    ##Read in the "accessibility measure" could be persons, jobs, firms, needs to be a zonal total
+    ##based on the zonal unit. ie. total jobs per taz, function will return access to jobs by taz
+    print 'Preparing Access Vector'
     access_data = read_csv(access_unit)
     inundation_data = read_csv(r"C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Data\General_ArcFiles\DBF_SHP_Exports\taz_perc_ind.csv")
     #Check to make sure the access unit column is actually a number, excel often converts them strings which
-    #are represeneted as objects in Pandas
+    #are represented as objects in Pandas
     if Inundation_Percent_label == '2010':
         inundation_vector = [1]*986
     else:
@@ -98,7 +88,6 @@ def multi_gamma_access(path, access_unit, access_label, Inundation_Percent_label
         name =  df.columns[0]
         df= df.drop(name, axis=1)
         
-
         #convert travel matriz skim dataframe to --> matrix
         dmatrix = df.as_matrix()
         di = np.diag_indices(len(dmatrix))
@@ -153,9 +142,13 @@ def run_all(intra_zonal_val):
         path = "C:\Users\mdo\Desktop\MIT\MIT_Fall2014\Thesis\Analysis\ProductionWork\Accessiblity_Work\Skims\Nov1\skim_csv\\" +  folder
         if folder == '2010':
             data = multi_gamma_access(path, access_unit, access_label, folder, base_vector_sum, intra_zonal=intra_zonal_val)
+            data["Z"] = [i for i in xrange(1,987)]
+            data = data[[data.columns[-1],  data.columns[0], data.columns[1], data.columns[2]]]
+                        
         else:
-            next_data = multi_gamma_access(path, access_unit, access_label, folder, base_vector_sum, intra_zonal=intra_zonal_val)
-            data = pd.merge(data, next_data, on=data.index, how='inner')
-            data = data.drop('key_0', axis=1)
-        data.index = [i for i in xrange(1,987)]
+            next_data = multi_gamma_access(path, access_unit, access_label, folder, base_vector_sum, intra_zonal=intra_zonal_val)            
+            next_data["Z"] = [i for i in xrange(1,987)]  
+            data = pd.merge(data, next_data, on="Z", how='inner')
+    
+            data.index = [i for i in xrange(1,987)]
     return data
