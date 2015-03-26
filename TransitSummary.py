@@ -31,28 +31,28 @@ paths2010variable   =  ["Year 2010\PTLOAD24HRS_Year 2010.PRN",
                         "Year 2010\SLR5\SLR5_Variable\PTLOAD24HRS_SLR5_Variable.PRN",
                         "Year 2010\SLR6\SLR6_Variable\PTLOAD24HRS_SLR6_Variable.PRN"]
 #Scenarios Fixed
-pathScenarioBase =      ["Sc2_2030\PTLOAD24HRS_SC2_2030.PRN",
-                         "SC2_2030_NOBUS\PTLOAD24HRS_SC2_2030_NOBUS.PRN",
-                         "Sc2_2030_OuterBus\PTLOAD24HRS_SC2_2030_OuterBus.PRN",
+pathScenarioBase =      ["SC1_2030_NOBUS\PTLOAD24HRS_SC1_2030_NOBUS.PRN",
                          "Sc1_2030\PTLOAD24HRS_SC1_2030.PRN",
-                         "SC1_2030_NOBUS\PTLOAD24HRS_SC1_2030_NOBUS.PRN",
-                         "Sc1_2030_OuterBus\PTLOAD24HRS_SC1_2030_OuterBus.PRN"]
+                         "Sc1_2030_OuterBus\PTLOAD24HRS_SC1_2030_OuterBus.PRN",
+                         "SC2_2030_NOBUS\PTLOAD24HRS_SC2_2030_NOBUS.PRN",
+                         "Sc2_2030\PTLOAD24HRS_SC2_2030.PRN",                        
+                         "Sc2_2030_OuterBus\PTLOAD24HRS_SC2_2030_OuterBus.PRN"]
 #Scenarios Fixed
-pathScenaroFixed     = ["Sc2_2030\SC2_2030_4ft_Fixed\PTLOAD24HRS_SC2_2030_4ft_Fixed.PRN",
-                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Fixed.PRN",
-                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Fixed.PRN",
+pathScenaroFixed     = ["SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Fixed.PRN",
                         "Sc1_2030\SC1_2030_4ft_Fixed\PTLOAD24HRS_SC1_2030_4ft_Fixed.PRN",
-                        "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Fixed.PRN",
-                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Fixed.PRN"]
+                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Fixed.PRN",
+                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Fixed\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Fixed.PRN",
+                        "Sc2_2030\SC2_2030_4ft_Fixed\PTLOAD24HRS_SC2_2030_4ft_Fixed.PRN",
+                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Fixed\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Fixed.PRN"]
 #Scenarios Variable                        
-pathScenarioVariable = ["Sc2_2030\SC2_2030_4ft_Variable\PTLOAD24HRS_SC2_2030_4ft_Variable.PRN",
-                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Variable.PRN",
-                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Variable.PRN",
+pathScenarioVariable = ["SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Variable.PRN",
                         "Sc1_2030\SC1_2030_4ft_Variable\PTLOAD24HRS_SC1_2030_4ft_Variable.PRN",
-                        "SC1_2030_NOBUS\SC1_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC1_2030_NOBUS_4ft_Variable.PRN",
-                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Variable.PRN"]
+                        "Sc1_2030_OuterBus\SC1_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC1_2030_OuterBus_4ft_Variable.PRN",
+                        "SC2_2030_NOBUS\SC2_2030_NOBUS_4ft_Variable\PTLOAD24HRS_SC2_2030_NOBUS_4ft_Variable.PRN",
+                        "Sc2_2030\SC2_2030_4ft_Variable\PTLOAD24HRS_SC2_2030_4ft_Variable.PRN",
+                        "Sc2_2030_OuterBus\SC2_2030_OuterBus_4ft_Variable\PTLOAD24HRS_SC2_2030_OuterBus_4ft_Variable.PRN"]
 
-relative_path = "I:\\Backups"
+relative_path = "G:\\Backups"
 #relative_path = "D:\User_Documents\Dowd_Michael\MODELS"
 fixed_path = 'March13Model\\CubeCatCong\\Base'
 #outpath = "D:\User_Documents\Dowd_Michael\TestingFolder\MarchTransitOutput"
@@ -130,7 +130,7 @@ def transit_summary_prn(path, first):
         data.columns = base_columns
         return data
 
-def Create_Tables(pathList, outpath):
+def Create_Tables(pathList, outpath, scenario=False):
     """This funciton will use all other functions to produce a single runable function to
     create the output. It will use load_file_list to get paths then run the transit_loads
     function while appending the returned file name from transit loads to a list. It will then
@@ -172,14 +172,15 @@ def Create_Tables(pathList, outpath):
     dfPdist = df[base_columns + dfPdist_cols]
     dfPHrs = df[base_columns + dfPHrs_cols]
     
-    #compute Difference from NO Inundation
-    for col in dfPHrs_cols[1:]:
-        dfPHrs["D_" + col] = dfPHrs[col] - dfPHrs[dfPHrs_cols[0]]
-    for col in dfpass_cols[1:]:
-        dfPass["D_" + col] = dfPass[col] - dfPass[dfpass_cols[0]]
+    if not scenario:
+        #compute Difference from NO Inundation
+        for col in dfPHrs_cols[1:]:
+            dfPHrs["D_" + col] = dfPHrs[col] - dfPHrs[dfPHrs_cols[0]]
+        for col in dfpass_cols[1:]:
+            dfPass["D_" + col] = dfPass[col] - dfPass[dfpass_cols[0]]
     
     return [df, dfPass, dfTime, dfPdist, dfPHrs]
         
     
 #Call
-df, dfPass, dfTime, dfPdist, dfPHrs = Create_Tables(paths2010variable, outpath)
+#df, dfPass, dfTime, dfPdist, dfPHrs = Create_Tables(paths2010variable, outpath)
